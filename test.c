@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 typedef struct{
         char subject[10];
@@ -21,21 +22,21 @@ int createSubject(Subject *s){
 }
 void readSubject(Subject s){
     char weekDay[3];
-    switch(s.day){
+	switch(s.day){
 	    case 1 :
-		weekDay = "월";
+		strcpy(weekDay,"월");
 	       break;	
 	    case 2 :
-		weekDay = "화";
+		strcpy(weekDay,"화");
 	       break;	
 	    case 3 :
-		weekDay = "수";
+		strcpy(weekDay,"수");
 	       break;	
 	    case 4 :
-		weekDay = "목";
+		strcpy(weekDay,"목");
 	       break;	
 	    case 5 :
-		weekDay = "금";
+		strcpy(weekDay,"금");
 	       break;	
 	    defaul:
 	       break;
