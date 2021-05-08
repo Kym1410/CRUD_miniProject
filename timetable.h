@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 typedef struct{
-	char[10] subject;
+	char subject[10];
 	int credit;
 	int day;
 	int hour;
@@ -9,10 +9,10 @@ typedef struct{
 } Subject;
 
 int createSubject(Subject *s);
-void readSubject(Subject *s);
+void readSubject(Subject s);
 void updateSubject(Subject *s);
 int deleteSubject(Subject *s);
-void printTimetable(Subject s[]);
+void listTimetable(Subject *s,int count);
 
 void searchSubject(Subject *s, int count); //과목명 검색 함수
 void serachDay(Subject *s, int count); //요일별 과목 검색 함수
