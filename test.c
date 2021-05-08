@@ -65,7 +65,7 @@ int deleteSubject(Subject *s){
 
 void listTimetable(Subject *s, int count){
     printf("\t과목명\t학점\t요일\t시간\n");
-    printf("--------------------------------\n");
+    printf("-----------------------------------\n");
     for(int i=0; i<count; i++){
         if(s[i].hour == 0) continue;
         printf("%d ", i+1);
