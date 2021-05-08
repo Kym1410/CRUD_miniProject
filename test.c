@@ -5,7 +5,6 @@ typedef struct{
         int credit;
         int day;
         int hour;
-        int yg;
 } Subject;
 
 int createSubject(Subject *s){
@@ -13,15 +12,36 @@ int createSubject(Subject *s){
     scanf("%s", s->subject);
     printf("과목 학점: ");
     scanf("%d", &s->credit);
-    printf("요일: ");
+    printf("요일(월:1 화:2 수:3 목:4 금:5: ");
     scanf("%d", &s->day);
-    printf("시간: ");
+    printf("교시: ");
     scanf("%d", &s->hour);
 
     return 1;
 }
 void readSubject(Subject s){
-    printf("%s     %d      %d         %d\n", s.subject, s.credit, s.day, s.hour);
+    char weekDay[3];
+    switch(s.day){
+	    case 1 :
+		weekDay = "월";
+	       break;	
+	    case 2 :
+		weekDay = "화";
+	       break;	
+	    case 3 :
+		weekDay = "수";
+	       break;	
+	    case 4 :
+		weekDay = "목";
+	       break;	
+	    case 5 :
+		weekDay = "금";
+	       break;	
+	    defaul:
+	       break;
+    }
+    printf("\t%s\t%d\t%s\t%d\n", s.subject, s.credit, weekDay, s.hour);
+
 }
 int updateSubject(Subject *s){
     printf("수강할 과목명: ");
@@ -43,7 +63,7 @@ int deleteSubject(Subject *s){
 }
 
 void listTimetable(Subject *s, int count){
-    printf("   과목명    학점     요일    시간\n");
+    printf("\t과목명\t학점\t요일\t시간\n");
     printf("--------------------------------\n");
     for(int i=0; i<count; i++){
         if(s[i].hour == 0) continue;
