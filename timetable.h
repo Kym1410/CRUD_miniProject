@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 typedef struct{
-	char[10] subject;
+	char subject[10];
 	int credit;
 	int day;
 	int hour;
