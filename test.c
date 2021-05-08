@@ -21,7 +21,7 @@ int createSubject(Subject *s){
     return 1;
 }
 void readSubject(Subject s){
-    char weekDay[3];
+    char weekDay[10];
 	switch(s.day){
 	    case 1 :
 		strcpy(weekDay,"월");
