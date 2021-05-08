@@ -2,7 +2,7 @@
 #include <string.h>
 
 typedef struct{
-        char subject[10];
+        char subject[15];
         int credit;
         int day;
         int hour;
@@ -21,7 +21,7 @@ int createSubject(Subject *s){
     return 1;
 }
 void readSubject(Subject s){
-    char weekDay[10];
+    char weekDay[15];
 	switch(s.day){
 	    case 1 :
 		strcpy(weekDay,"월");
@@ -88,14 +88,42 @@ int selectMenu(){
     printf("2.과목 추가\n");
     printf("3.과목 수정\n");
     printf("4.과목 삭제\n");
+    printf("5.시간표 출력\n");
     printf("0.종료\n\n");
     printf("=> 원하는 메뉴는? ");
     scanf("%d", &menu);
     return menu;
 }
+char* searchDayHour(Subject s[], int count, int day, int hour){
+	for(int i=0; i<count; i++){
+			if(s[i].day == day && s[i].hour == hour)
+				return s[i].subject;
+	}
+	return 0;
+}
+void printTimetable(Subject s[],int count){
+	int doubleArray[10][5] = {0};
+	for(int i=0; i<count; i++){
+		doubleArray[(s[i].hour)-1][(s[i].day)-1] = 1;
+	}
+	char temp[10];
+	printf("\t월\t화\t수\t목\t금\n");
+	printf("----------------------------------------\n");
+	for(int j=0; j<10;j++){
+		printf("%d교시\t",j+1);
+		for(int k=0; k<5; k++){
+			if(doubleArray[j][k] == 1){
+				strcpy(temp,searchDayHour(s, count, k+1, j+1));
+			 	printf("%s\t", temp);
+			}
+			else printf("\t");
+		}
+		printf("\n");
+	}
 
+}
 int main(){
-  Subject sub[4];
+  Subject sub[10];
   int index = 0;
   int count = 0, menu;
 
@@ -123,6 +151,9 @@ int main(){
               scanf("%d", &delok);
               if(delok == 1) deleteSubject(&sub[no-1]);
           }
+      }
+      if(menu == 5){
+      	printTimetable(sub,count);
       }
 
 
