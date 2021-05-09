@@ -2,7 +2,7 @@
 #include <string.h>
 
 typedef struct{
-        char subject[15];
+        char subject[30];
         int credit;
         int day;
         int hour;
@@ -64,8 +64,8 @@ int deleteSubject(Subject *s){
 }
 
 void listTimetable(Subject *s, int count){
-    printf("\t과목명\t학점\t요일\t시간\n");
-    printf("-----------------------------------\n");
+    printf("\t과목명\t\t학점   \t요일   \t시간\n");
+    printf("-------------------------------------------------\n");
     for(int i=0; i<count; i++){
         if(s[i].hour == 0) continue;
         printf("%d ", i+1);
@@ -107,8 +107,8 @@ void printTimetable(Subject s[],int count){
 		doubleArray[(s[i].hour)-1][(s[i].day)-1] = 1;
 	}
 	char temp[10];
-	printf("\t월\t화\t수\t목\t금\n");
-	printf("----------------------------------------\n");
+	printf("        \t\t월\t\t화\t\t수\t\t목\t\t금\n");
+	printf("----------------------------------------------------------------------------------\n");
 	for(int j=0; j<10;j++){
 		printf("%d교시\t",j+1);
 		for(int k=0; k<5; k++){
