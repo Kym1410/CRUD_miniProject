@@ -9,11 +9,11 @@ typedef struct{
 } Subject;
 
 int createSubject(Subject *s){
-    printf("수강할 과목명: ");
+    printf("수강할 과목명(세글자): ");
     scanf("%s", s->subject);
     printf("과목 학점: ");
     scanf("%d", &s->credit);
-    printf("요일(월:1 화:2 수:3 목:4 금:5: ");
+    printf("요일(월:1 화:2 수:3 목:4 금:5): ");
     scanf("%d", &s->day);
     printf("교시: ");
     scanf("%d", &s->hour);
@@ -114,7 +114,7 @@ void printTimetable(Subject s[],int count){
 		for(int k=0; k<5; k++){
 			if(doubleArray[j][k] == 1){
 				strcpy(temp,searchDayHour(s, count, k+1, j+1));
-			 	printf("%s\t", temp);
+				printf("%s\t", temp);
 			}
 			else printf("\t");
 		}
