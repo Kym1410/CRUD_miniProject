@@ -32,7 +32,7 @@ void readSubject(Subject s){
             case 5 :
                 strcpy(weekDay,"금");
                break;
-            defaul:
+            default:
                break;
     }
     printf("\t%s\t%d\t%s\t%d\n", s.subject, s.credit, weekDay, s.hour);
