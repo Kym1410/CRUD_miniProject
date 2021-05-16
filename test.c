@@ -101,7 +101,6 @@ int loadTimetable(Subject *s){
 
     if(fc!=NULL){
         for(i=0; i<100; i++){
-		if(feof(fc)){ break;}
             fscanf(fc,"%s", s[i].subject);
             fscanf(fc,"%d", &s[i].credit);
             fscanf(fc,"%d", &s[i].day);
@@ -112,9 +111,7 @@ int loadTimetable(Subject *s){
         }
         printf("=>로딩 성공\n");
     }
-    else if(fc == NULL){
-	    printf("데이터 없음\n");
-    }
+    else printf("데이터 없음\n");
 
     fclose(fc);
     return i;
