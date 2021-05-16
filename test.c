@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 typedef struct{
@@ -64,8 +65,8 @@ int deleteSubject(Subject *s){
 }
 
 void listTimetable(Subject *s, int count){
-    printf("\t과목명\t\t학점   \t요일   \t시간\n");
-    printf("-------------------------------------------------\n");
+    printf("\t과목명\t학점\t요일\t시간\n");
+    printf("-----------------------------------\n");
     for(int i=0; i<count; i++){
         if(s[i].hour == 0) continue;
         printf("%d ", i+1);
@@ -81,6 +82,134 @@ int selectList(Subject *s, int count){
     return no;
 }
 
+void saveTimetable(Subject *s, int count){
+    FILE *fp;
+    fp = fopen("Timetable.txt","wt");
+
+    for(int i=0; i<count; i++){
+        if(s[i].hour == 0) continue;
+        fprintf(fp, "%s %d %d %d\n",s[i].subject,s[i].credit,s[i].day, s[i].hour);
+    }
+    fclose(fp);
+    printf("=>저장됨! ");
+}
+
+int loadTimetable(Subject *s){
+    FILE *fc;
+    int i;
+    fc = fopen("Timetable.txt","rt");
+
+    if(fc!=NULL){
+        for(i=0; i<100; i++){
+		if(feof(fc)){ break;}
+            fscanf(fc,"%s", s[i].subject);
+            fscanf(fc,"%d", &s[i].credit);
+            fscanf(fc,"%d", &s[i].day);
+            fscanf(fc,"%d", &s[i].hour);
+            if(feof(fc)){
+                break;
+            }
+        }
+        printf("=>로딩 성공\n");
+    }
+    else if(fc == NULL){
+	    printf("데이터 없음\n");
+    }
+
+    fclose(fc);
+    return i;
+}
+
+void searchSubject(Subject *s, int count){
+    int scnt = 0;
+    char search[30];
+
+    printf("검색할 과목: ");
+    scanf("%s", search);
+
+    printf("\t과목명\t학점\t요일\t시간\n");
+    printf("-----------------------------------\n");
+
+    for(int i=0; i<count; i++){
+        if(s[i].hour == 0) continue;
+        if(strstr(s[i].subject,search)){
+            printf("%2d",i+1);
+            readSubject(s[i]);
+            scnt++;
+        }
+    }
+    if(scnt == 0) printf("=>검색된 과목 없음!\n");
+
+}
+
+void searchCredit(Subject *s, int count){
+    int scnt = 0;
+    int search;
+
+    printf("검색할 학점(1/2/3): ");
+    scanf("%d", &search);
+
+    printf("\t과목명\t학점\t요일\t시간\n");
+    printf("-----------------------------------\n");
+
+    for(int i = 0; i<count; i++){
+        if(s[i].hour == 0) continue;
+        if(s[i].credit == search){
+            printf("%2d",i+1);
+            readSubject(s[i]);
+            scnt++;
+        }
+    }
+    if(scnt == 0) printf("검색된 과목 없음!\n");
+
+}
+
+void searchDay(Subject *s, int count){
+    int scnt = 0;
+    int search;
+
+    printf("검색할 요일(월:1 화:2 수:3 목:4 금:5): ");
+    scanf("%d",&search);
+
+    printf("\t과목명\t학점\t요일\t시간\n");
+    printf("-----------------------------------\n");
+
+    for(int i = 0; i<count; i++){
+        if(s[i].hour == 0) continue;
+        if(s[i].day == search){
+            printf("%2d",i+1);
+            readSubject(s[i]);
+            scnt++;
+        }
+    }
+    if(scnt == 0) printf("검색된 과목 없음!\n");
+
+}
+
+void searchHoure(Subject *s, int count){
+    int scnt = 0;
+    int search;
+
+    printf("검색할 시간(1 ~ 7교시): ");
+    scanf("%d",&search);
+
+    printf("\t과목명\t학점\t요일\t시간\n");
+    printf("-----------------------------------\n");
+
+    for(int i = 0; i<count; i++){
+        if(s[i].hour == 0) continue;
+        if(s[i].hour == search){
+            printf("%2d",i+1);
+            readSubject(s[i]);
+            scnt++;
+        }
+    }
+    if(scnt == 0) printf("검색된 과목 없음!\n");
+
+}
+
+
+
 int selectMenu(){
     int menu;
     printf("\n*** 점수계산기 ***\n");
@@ -89,6 +218,11 @@ int selectMenu(){
     printf("3.과목 수정\n");
     printf("4.과목 삭제\n");
     printf("5.시간표 출력\n");
+    printf("6.시간표 저장\n");
+    printf("7.과목 검색\n");
+    printf("8.학점 검색\n");
+    printf("9.요일 검색\n");
+    printf("10.시간 검색\n");
     printf("0.종료\n\n");
     printf("=> 원하는 메뉴는? ");
     scanf("%d", &menu);
@@ -107,8 +241,8 @@ void printTimetable(Subject s[],int count){
 		doubleArray[(s[i].hour)-1][(s[i].day)-1] = 1;
 	}
 	char temp[10];
-	printf("        \t\t월\t\t화\t\t수\t\t목\t\t금\n");
-	printf("----------------------------------------------------------------------------------\n");
+	printf("\t월\t화\t수\t목\t금\n");
+	printf("----------------------------------------\n");
 	for(int j=0; j<10;j++){
 		printf("%d교시\t",j+1);
 		for(int k=0; k<5; k++){
@@ -123,10 +257,12 @@ void printTimetable(Subject s[],int count){
 
 }
 int main(){
-  Subject sub[10];
+  Subject sub[100];
   int index = 0;
   int count = 0, menu;
 
+    count = loadTimetable(sub);
+    index = count;
   while(1){
       menu = selectMenu();
 
@@ -154,6 +290,21 @@ int main(){
       }
       if(menu == 5){
       	printTimetable(sub,count);
+      }
+      if(menu == 6){
+          saveTimetable(sub,index);
+      }
+      if(menu == 7){
+          searchSubject(sub,index);
+      }
+      if(menu == 8){
+          searchCredit(sub,index);
+      }
+      if(menu == 9){
+          searchDay(sub,index);
+      }
+      if(menu == 10){
+          searchHoure(sub,index);
       }
 
 
