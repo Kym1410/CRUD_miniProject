@@ -1,3 +1,5 @@
 a.out
 Timetable.txt
 *.o
+*.exe
+test
